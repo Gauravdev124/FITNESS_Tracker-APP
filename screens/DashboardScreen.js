@@ -5,8 +5,11 @@ const mobileW =  Dimensions.get('window').width
 const mobileH =  Dimensions.get('window').height
 import {Colors,Fonts}from './color/color.ts'
 
-export default function DashboardScreen({ route, navigation }) {
-  const { firstName } = route.params || { firstName: 'User' };
+const DashboardScreen = ({ route, navigation }) => {
+  const { userEmail } = route.params || {};
+
+
+  
 
   return (
      <SafeAreaView style={styles.safeArea}>
@@ -18,7 +21,7 @@ export default function DashboardScreen({ route, navigation }) {
        
       </View>
     <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome, {firstName}!</Text>
+      <Text style={styles.welcome}>Welcome, {userEmail}</Text>
       <Text style={styles.welcome}>10,000 steps today</Text>
     
  <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
@@ -32,7 +35,7 @@ export default function DashboardScreen({ route, navigation }) {
       </SafeAreaView>
   );
 }
-
+export default DashboardScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

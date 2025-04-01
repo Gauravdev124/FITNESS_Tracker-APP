@@ -16,7 +16,7 @@ const ProfileScreen = ({ navigation }) => {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.primary} />
        <View style={styles.Header}>
-              <TouchableOpacity onPress={()=>navigation.goBack()}>
+              <TouchableOpacity activeOpacity={0.6}  onPress={()=>navigation.goBack()}>
                 <Image style={styles.Image} source={ require('../screens/icon/arrow.png')} />
               </TouchableOpacity>
               
@@ -36,7 +36,7 @@ const ProfileScreen = ({ navigation }) => {
         )}
       />
 
-      <TouchableOpacity onPress={() => navigation.navigate('WorkoutHistory')}>
+      <TouchableOpacity activeOpacity={0.6}  onPress={() => navigation.navigate('WorkoutHistory')}>
         <LinearGradient
         colors={['#FC8EAC', '#FFC0CB']}
           style={styles.button}>

@@ -21,8 +21,8 @@ const ForgotPasswordScreen = ({navigation}) => {
       <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.primary} />
 
-       <View style={styles.Header}>
-              <TouchableOpacity onPress={()=>navigation.goBack()}>
+              <View style={styles.Header}>
+              <TouchableOpacity activeOpacity={0.6}  onPress={()=>navigation.goBack()}>
                 <Image style={styles.Image} source={ require('../screens/icon/arrow.png')} />
               </TouchableOpacity>
               
@@ -30,11 +30,16 @@ const ForgotPasswordScreen = ({navigation}) => {
             </View>
     <View style={styles.container}>
       <Text style={styles.text}>Forgot Password ?</Text>
-      <TextInput placeholder="Enter your email" style={styles.input} keyboardType="email-address" onChangeText={setEmail} />
+        <TextInput
+ placeholder="Enter your email"
+          placeholderTextColor="black"
+  style={[styles.input, { color: 'black' }]} // Ensure text is visible
+          keyboardType="email-address"
+           onChangeText={setEmail} />
         
         
 
-        <TouchableOpacity onPress={handleResetPassword} >
+        <TouchableOpacity activeOpacity={0.6}  onPress={handleResetPassword} >
                 <LinearGradient
                   colors={['#FC8EAC', '#FFC0CB']}
                   style={styles.button}>
@@ -83,12 +88,10 @@ const styles = StyleSheet.create({
     },
     
     buttonText: {
-      fontSize: mobileW*5/100,
+      fontSize: mobileW*4/100,
       color: Colors.buttontxtcolor,
-      fontWeight: Fonts.fontWeight,
-      
-    
-  },
+       fontWeight: Fonts.fontWeight,
+     },
      Header: {
         width: mobileW * 100 / 100,
         height: mobileW * 7 / 100,

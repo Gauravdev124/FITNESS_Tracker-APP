@@ -3,48 +3,75 @@ import React,{useState} from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Dimensions ,TextInput ,Alert,SafeAreaView,StatusBar} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 const mobileW =  Dimensions.get('window').width
-const mobileH =  Dimensions.get('window').height
+const mobileH = Dimensions.get('window').height
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Colors ,Fonts}from './color/color.ts'
 export default function SignupScreen({ navigation }) {
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignup = () => {
-    if (!firstName || !email.includes('@') || password.length < 6) {
-      Alert.alert('Error', 'Fill all fields');
+
+  // Regex for validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^.{6,}$/; // At least 6 chars, one letter & one number
+
+  const handleSignUp = async () => { 
+    if (!firstName.trim()) {
+      Alert.alert('Invalid Name', 'Please enter your name.');
       return;
     }
-    Alert.alert('Done', ' Successfully done Sign up');
-    navigation.navigate('Login');
+    if (!emailRegex.test(email)) {
+      Alert.alert('Invalid Email', 'Please enter a valid email.');
+      return;
+    }
+    if (!passwordRegex.test(password)) {
+      Alert.alert('Weak Password', 'Password must be at least 6 characters and contain a number.');
+      return;
+    }
+
+    try {
+      const userData = { firstName, email, password };
+      await AsyncStorage.setItem('user', JSON.stringify(userData));
+      Alert.alert('Success', 'Account created! Please log in.');
+      navigation.navigate('Login');
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Something went wrong.');
+    }
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.primary} />
     <View style={styles.container}>
+       <Text style={styles.buttonTextt}> Sign up !!</Text>
       <Text style={styles.text}>First Name</Text>
       <TextInput
         placeholder='Enter a Name'
-        style={styles.input}
+         placeholderTextColor="black"
+  style={[styles.input, { color: 'black' }]}
         value={firstName}
         onChangeText={setFirstName} />
 
        <Text style={styles.text}>Email</Text>
       <TextInput
+     
         placeholder='Enter a Email'
-        style={styles.input}
+       placeholderTextColor="black"
+  style={[styles.input, { color: 'black' }]}
         value={email}
         onChangeText={setEmail} />
 
        <Text style={styles.text}>Password</Text>
       <TextInput
         placeholder='Enter a Password'
-        style={styles.input}
+        placeholderTextColor="black"
+  style={[styles.input, { color: 'black' }]}
         secureTextEntry value={password}
         onChangeText={setPassword} />
 
-       <TouchableOpacity  onPress={handleSignup}>
+       <TouchableOpacity activeOpacity={0.6}   onPress={handleSignUp}>
               <LinearGradient
                 colors={['#FC8EAC', '#FFC0CB']}
                 style={styles.button}>
@@ -65,6 +92,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex:1,
     alignSelf:"center"
+  },
+  buttonTextt:{
+   color: Colors.forgottxtcolor,
+    fontSize: mobileW * 5 / 100,
+    marginBottom:mobileW*2/100
   },
   input: {
     borderWidth: mobileW*0.2/100,
